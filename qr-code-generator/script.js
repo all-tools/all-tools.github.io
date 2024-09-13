@@ -62,7 +62,7 @@ let qrCodeObj;
 
             // Display the iframe code
             const iframeCodeDiv = document.getElementById("iframe-code");
-            iframeCodeDiv.innerHTML = `Embed this QR code: <pre>${iframeCode}</pre>`;
+            iframeCodeDiv.innerText = `Embed this QR code: <pre>${iframeCode}</pre>`;
         }
 
         // Function to download the QR code as an image

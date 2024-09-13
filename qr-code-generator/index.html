@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>User generated content on v0.dev</title>
+    <title>QR Code Generator - Create and Customize Your QR Codes Easily</title>
+    <meta name="description" content="Generate and customize QR codes effortlessly with our QR Code Generator. Enter your text or URL, adjust the size, color, and error correction level, and get a shareable URL and embed code. Perfect for personal and professional use!">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -49,7 +50,27 @@
                         </select>
                     </div><button
                         class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-                        data-id="24" onclick="generateQRCode()">Generate QR Code</button>
+                        data-id="24" onclick="generateQRCode()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50">
+                            <!-- Button Background -->
+                            <rect width="150" height="50" rx="10" ry="10" fill="#4CAF50" />
+                        
+                            <!-- Button Text -->
+                            <text x="75" y="30" fill="white" font-size="15" font-family="Arial, sans-serif" text-anchor="middle" alignment-baseline="middle">
+                                Generate QR Code
+                            </text>
+                        
+                            <!-- Hover Effect -->
+                            <style>
+                                rect {
+                                    transition: fill 0.3s;
+                                }
+                        
+                                rect:hover {
+                                    fill: #45a049;
+                                }
+                            </style>
+                        </svg></button>
                 </div>
                 <div class="space-y-4" data-id="25">
                     <div id="qrcode" class="flex justify-center" data-id="26"></div>
