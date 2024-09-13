@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Locator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
 
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>IP Address Locator</h1>
+
+        <!-- Input for IP Address -->
+        <input type="text" id="ipAddress" placeholder="Enter IP address (leave blank for your own IP)">
+        
+        <!-- Button to Get Location -->
+        <button onclick="locateIP()">Locate IP</button>
+
+        <!-- Display Result -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Function to locate IP address using the ip-api.com service
+        function locateIP() {
+            const ip = document.getElementById("ipAddress").value || ''; // Use user's IP if no input is given
+            const apiUrl = `http://ip-api.com/json/${ip}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "fail") {
+                        document.getElementById("result").innerHTML = "Unable to locate the IP address.";
+                    } else {
+                        document.getElementById("result").innerHTML = `
+                            <strong>IP Address:</strong> ${data.query} <br>
+                            <strong>City:</strong> ${data.city} <br>
+                            <strong>Region:</strong> ${data.regionName} <br>
+                            <strong>Country:</strong> ${data.country} <br>
+                            <strong>ZIP:</strong> ${data.zip} <br>
+                            <strong>Latitude:</strong> ${data.lat} <br>
+                            <strong>Longitude:</strong> ${data.lon} <br>
+                            <strong>ISP:</strong> ${data.isp} <br>
+                            <strong>Timezone:</strong> ${data.timezone} <br>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("result").innerHTML = "An error occurred: " + error;
+                });
+        }
+    </script>
+
+</body>
+</html>
