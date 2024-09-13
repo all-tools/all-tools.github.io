@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Steganography - Hide Text in Image</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            color: #333;
+        }
+        input, textarea {
+            width: 300px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        canvas {
+            display: block;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #decodedText {
+            font-size: 16px;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Hide Text in Image</h2>
+
+<!-- Upload an Image -->
+<input type="file" id="imageInput" accept="image/*"><br>
+
+<!-- Text to Hide -->
+<textarea id="textToHide" placeholder="Enter text to hide" rows="4"></textarea><br>
+
+<!-- Button to Encode -->
+<button onclick="encodeText()">Encode Text in Image</button><br>
+
+<!-- Display the Image with Hidden Text -->
+<canvas style="max-height: 110px;" id="imageCanvas"></canvas><br>
+
+<!-- Button to Download Image -->
+<button onclick="downloadImage()">Download Image</button><br>
+
+<!-- Button to Decode Text -->
+<button onclick="decodeText()">Decode Text</button><br>
+
+<!-- Display Decoded Text -->
+<p id="decodedText"></p>
+
+<script>
+    let canvas = document.getElementById('imageCanvas');
+    let ctx = canvas.getContext('2d');
+    let imgData;
+
+    // Load the Image onto the Canvas
+    document.getElementById('imageInput').addEventListener('change', function(event) {
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let img = new Image();
+            img.onload = function() {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+
+    // Function to Encode Text in Image
+    function encodeText() {
+        let text = document.getElementById('textToHide').value;
+        if (!text || !imgData) return;
+
+        // Convert text to binary
+        let binaryText = '';
+        for (let i = 0; i < text.length; i++) {
+            let binaryChar = text[i].charCodeAt(0).toString(2).padStart(8, '0');
+            binaryText += binaryChar;
+        }
+        binaryText += '11111111'; // Add delimiter to mark end of message
+
+        // Embed binary text in the image's pixel data
+        let data = imgData.data;
+        for (let i = 0, j = 0; i < data.length && j < binaryText.length; i += 4) {
+            // Modify the least significant bit of the red channel
+            data[i] = (data[i] & 254) | parseInt(binaryText[j], 2);
+            j++;
+        }
+
+        // Update the canvas with the modified pixel data
+        ctx.putImageData(imgData, 0, 0);
+        alert('Text encoded successfully!');
+    }
+
+    // Function to Decode Hidden Text
+    function decodeText() {
+        if (!imgData) return;
+
+        let data = imgData.data;
+        let binaryText = '';
+        for (let i = 0; i < data.length; i += 4) {
+            binaryText += (data[i] & 1).toString(); // Extract LSB of the red channel
+        }
+
+        // Convert binary back to text
+        let hiddenText = '';
+        for (let i = 0; i < binaryText.length; i += 8) {
+            let byte = binaryText.slice(i, i + 8);
+            if (byte === '11111111') break; // Stop at the delimiter
+            hiddenText += String.fromCharCode(parseInt(byte, 2));
+        }
+
+        document.getElementById('decodedText').textContent = 'Hidden Text: ' + hiddenText;
+    }
+
+    // Function to Download the Image
+    function downloadImage() {
+        let link = document.createElement('a');
+        link.download = 'encoded-image.png';
+        link.href = canvas.toDataURL();
+        link.click();
+    }
+</script>
+
+</body>
+</html>
+
