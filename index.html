@@ -1,0 +1,201 @@
+<html class="__className_36bd41 v0-streaming-finished" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SEO Analyzer - Optimize Your Website for Search Engines</title>
+    <meta name="description" content="Use our comprehensive SEO analyzer to evaluate your website's performance. Get insights on keywords, meta tags, headings, links, and more to improve search engine rankings.">
+    <meta name="next-size-adjust">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-background !opacity-100 transition-opacity duration-300" style="opacity:0">
+    <div id="loading" class="loading">Loading&#8230;</div>
+    <!--$--><!--$-->
+    <div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events:none">
+        <ol tabindex="-1"
+            class="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col lg:max-w-[420px]">
+        </ol>
+    </div>
+    
+    <div class="!visible transition-opacity duration-150 bg-background text-foreground !opacity-100" id="v0-container"
+        style="opacity:0"><!--$--><!--/$-->
+        <div class="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8" data-id="10">
+            <div class="max-w-4xl mx-auto" data-id="11">
+                <header class="text-center mb-12" data-id="12">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-2" data-id="13">SEO Analyzer Results</h1>
+                    <p class="text-xl text-gray-600" data-id="14">Comprehensive SEO analysis of the requested URL</p>
+                </header>
+                <div style="width: 100%;display: flex;justify-content: center;align-items: center;margin: 1rem;flex-direction: row;" class="form-group">
+                    <input id="input" style="padding: 6px;font-size: 1.125rem; width:50%;" class="form-field" type="text" placeholder="Enter website url">
+                    <button onclick="analyze()" style="background-color: #3b82f6; font-size: 1.125rem;padding: 6px;color: white;">analyze</button>
+                </div>
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8" data-id="15">
+                    <div class="px-4 py-5 sm:px-6" data-id="16">
+                        <h2 class="text-2xl font-semibold text-gray-900" data-id="17">Score Summary</h2>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0" data-id="18">
+                        <dl class="sm:divide-y sm:divide-gray-200" data-id="19">
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="20">
+                                <dt class="text-sm font-medium text-gray-500" data-id="21">Overall SEO Score</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="22">
+                                    <div class="flex items-center" data-id="23">
+                                        <div class="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold"
+                                            data-id="24" id="score"></div><span class="ml-2 text-lg font-semibold"
+                                            data-id="25">out of 100</span>
+                                    </div>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8" data-id="26">
+                    <div class="px-4 py-5 sm:px-6" data-id="27">
+                        <h2 class="text-2xl font-semibold text-gray-900" data-id="28">Technical Factors</h2>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0" data-id="29">
+                        <dl class="sm:divide-y sm:divide-gray-200" data-id="30">
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="31">
+                                <dt class="text-sm font-medium text-gray-500" data-id="32">Secure Connection (HTTPS)
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="33">
+                                    </svg><span id="secure_connection"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="35">
+                                <dt class="text-sm font-medium text-gray-500" data-id="36">Response Time</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="37"><span id="response_time"></span> seconds
+                                </dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="38">
+                                <dt class="text-sm font-medium text-gray-500" data-id="39">Page Size</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="40"><span id="page_size_kb"></span> KB</dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="41">
+                                <dt class="text-sm font-medium text-gray-500" data-id="42">Minified CSS</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="43">
+                                    </svg><span id="minified_css"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="45">
+                                <dt class="text-sm font-medium text-gray-500" data-id="46">Minified JavaScript</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="47">
+                                    </svg><span id="minified_js"></span></dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8" data-id="49">
+                    <div class="px-4 py-5 sm:px-6" data-id="50">
+                        <h2 class="text-2xl font-semibold text-gray-900" data-id="51">On-Page Factors</h2>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0" data-id="52">
+                        <dl class="sm:divide-y sm:divide-gray-200" data-id="53">
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="54">
+                                <dt class="text-sm font-medium text-gray-500" data-id="55">SEO Title</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="56"><span id="seo_title"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="57">
+                                <dt class="text-sm font-medium text-gray-500" data-id="58">Meta Description</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="59"><span id="meta_description"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="60">
+                                <dt class="text-sm font-medium text-gray-500" data-id="61">H1 Headings</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="62">
+                                    <span id="h1_headings"></span>
+                                </dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="65">
+                                <dt class="text-sm font-medium text-gray-500" data-id="66">H2 Headings</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="67">
+                                    <span id="h2_headings"></span>
+                                </dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="70">
+                                <dt class="text-sm font-medium text-gray-500" data-id="71">Image ALT Attributes</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="72">
+                                    <span id="image_alt_texts"></span>
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-8" data-id="75">
+                    <div class="px-4 py-5 sm:px-6" data-id="76">
+                        <h2 class="text-2xl font-semibold text-gray-900" data-id="77">Content Analysis</h2>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0" data-id="78">
+                        <dl class="sm:divide-y sm:divide-gray-200" data-id="79">
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="80">
+                                <dt class="text-sm font-medium text-gray-500" data-id="81">Common Keywords</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="82"><span id="common_keywords"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="83">
+                                <dt class="text-sm font-medium text-gray-500" data-id="84">Keywords in Title</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="85">
+                                    </svg><span id="keywords_in_title"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="87">
+                                <dt class="text-sm font-medium text-gray-500" data-id="88">Keywords in Description</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="89">
+                                    </svg><span id="keywords_in_description"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="91">
+                                <dt class="text-sm font-medium text-gray-500" data-id="92">Links Ratio</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="93">Total: <span id="links_ratio_total_links"></span>,
+                                    Internal: <span id="links_ratio_internal_links"></span>, External: <span id="links_ratio_external_links"></span></dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg" data-id="94">
+                    <div class="px-4 py-5 sm:px-6" data-id="95">
+                        <h2 class="text-2xl font-semibold text-gray-900" data-id="96">Additional Factors</h2>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:p-0" data-id="97">
+                        <dl class="sm:divide-y sm:divide-gray-200" data-id="98">
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="99">
+                                <dt class="text-sm font-medium text-gray-500" data-id="100">Canonical Tag</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="101">
+                                    <span id="canonical_tag"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="102">
+                                <dt class="text-sm font-medium text-gray-500" data-id="103">Noindex Meta</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="104">
+                                    </svg><span id="noindex_meta"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="106">
+                                <dt class="text-sm font-medium text-gray-500" data-id="107">WWW Canonicalization</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="108">
+                                    </svg><span id="www_canonicalization"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="110">
+                                <dt class="text-sm font-medium text-gray-500" data-id="111">OpenGraph Meta</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="112"><span id="open_graph_meta"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="113">
+                                <dt class="text-sm font-medium text-gray-500" data-id="114">Robots.txt</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="115">
+                                    </svg><span id="robots_txt"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="117">
+                                <dt class="text-sm font-medium text-gray-500" data-id="118">Schema Meta Data</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="119">
+                                    </svg><span id="schema_meta_data"></span></dd>
+                            </div>
+                            <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" data-id="121">
+                                <dt class="text-sm font-medium text-gray-500" data-id="122">Directory Listing</dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2" data-id="123">
+                                    </svg><span id="directory_listing"></span></dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
