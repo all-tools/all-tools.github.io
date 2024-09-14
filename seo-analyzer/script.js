@@ -1,4 +1,5 @@
 async function analyze() {
+    if(!document.getElementById("input").value.startsWith("http")) {alert("url must start with http:// or https://");return}
     document.getElementById("loading").style.display = "block";
     url = 'https://fair-organic-gibbon.anvil.app/hello/' + encodeURIComponent(document.getElementById('input').value); // Replace with your actual URL
     let data;
