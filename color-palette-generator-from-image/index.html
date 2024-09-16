@@ -1,1 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Generator</title>
+    <meta name="description" content="Use our color palette generator from image to extract distinct colors from any uploaded image. Generate unique color schemes with just one click.">
+    <style>
+        /* General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .controls input[type="file"],
+        .controls button {
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .controls input[type="file"] {
+            background: #007bff;
+            color: #fff;
+            width: 48%;
+        }
+
+        .controls button {
+            background: #28a745;
+            color: #fff;
+            width: 48%;
+        }
+
+        .controls button:hover,
+        .controls input[type="file"]:hover {
+            opacity: 0.8;
+        }
+
+        .palette {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .palette-color {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .palette-color:hover {
+            transform: scale(1.1);
+        }
+
+        .palette-color span {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
+        #imageCanvas {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .palette-color {
+                width: 45%;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Color Palette Generator</h1>
+        <div class="controls">
+            <input type="file" id="imageInput" accept="image/*">
+            <button id="generateRandom">Random Palette</button>
+        </div>
+        <div id="palette" class="palette"></div>
+        <canvas id="imageCanvas"></canvas>
+    </div>
+
+    <script>
+        document.getElementById('imageInput').addEventListener('change', handleImageUpload);
+        document.getElementById('generateRandom').addEventListener('click', generateRandomPalette);
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const img = new Image();
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    img.onload = () => extractColorsFromImage(img);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function extractColorsFromImage(image) {
+            const canvas = document.getElementById('imageCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = image.width;
+            canvas.height = image.height;
+            ctx.drawImage(image, 0, 0);
+
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const colors = getDistinctColors(imgData.data, 5);
+            displayPalette(colors);
+        }
+
+        function getDistinctColors(data, count) {
+            const colorCounts = {};
+            const step = 20;  // Sample every 20th pixel for more variety
+
+            // Iterate over image data, group pixels into colors
+            for (let i = 0; i < data.length; i += step * 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                const rgb = `${r},${g},${b}`;
+
+                if (!colorCounts[rgb]) {
+                    colorCounts[rgb] = 1;
+                } else {
+                    colorCounts[rgb]++;
+                }
+            }
+
+            // Sort colors by frequency
+            const sortedColors = Object.keys(colorCounts).sort((a, b) => colorCounts[b] - colorCounts[a]);
+
+            // Filter colors to ensure distinctness using a threshold
+            const distinctColors = [];
+            const threshold = 50;
+
+            sortedColors.forEach(color => {
+                const [r1, g1, b1] = color.split(',').map(Number);
+                if (distinctColors.length === 0) {
+                    distinctColors.push(color);
+                } else {
+                    let isDistinct = true;
+                    for (const distinctColor of distinctColors) {
+                        const [r2, g2, b2] = distinctColor.split(',').map(Number);
+                        if (Math.abs(r1 - r2) < threshold && Math.abs(g1 - g2) < threshold && Math.abs(b1 - b2) < threshold) {
+                            isDistinct = false;
+                            break;
+                        }
+                    }
+                    if (isDistinct && distinctColors.length < count) {
+                        distinctColors.push(color);
+                    }
+                }
+            });
+
+            return distinctColors.map(color => `rgb(${color})`);
+        }
+
+        function displayPalette(colors) {
+            const paletteContainer = document.getElementById('palette');
+            paletteContainer.innerHTML = '';
+
+            colors.forEach(color => {
+                const colorDiv = document.createElement('div');
+                colorDiv.classList.add('palette-color');
+                colorDiv.style.backgroundColor = color;
+                colorDiv.innerHTML = `<span>${color}</span>`;
+                colorDiv.addEventListener('click', () => copyToClipboard(color));
+                paletteContainer.appendChild(colorDiv);
+            });
+        }
+
+        function generateRandomPalette() {
+            const colors = [];
+            for (let i = 0; i < 5; i++) {
+                colors.push(randomColor());
+            }
+            displayPalette(colors);
+        }
+
+        function randomColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r},${g},${b})`;
+        }
+
+        function copyToClipboard(color) {
+            const tempInput = document.createElement('input');
+            tempInput.value = color;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            alert(`Copied ${color} to clipboard!`);
+        }
+    </script>
+
+</body>
+</html>
